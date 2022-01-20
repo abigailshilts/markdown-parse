@@ -10,13 +10,17 @@ public class MarkdownParse {
         // find the next [, then find the ], then find the (, then take up to
         // the next )
         int currentIndex = 0;
-        while(currentIndex < markdown.length()) {
+        boolean failsafe = false;
+        while(currentIndex < markdown.length() && !failsafe) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
             if (markdown.substring(openParen +1, closeParen).contains(".") && !markdown.substring(openParen +1, closeParen).contains(" ")){
                 toReturn.add(markdown.substring(openParen + 1, closeParen));
+            }
+            if (!markdown.substring(closeParen+1,markdown.length()).contains(")") ) {
+                failsafe = true;
             }
             currentIndex = closeParen + 1;
             System.out.println("in loop");
