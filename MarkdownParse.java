@@ -14,24 +14,20 @@ public class MarkdownParse {
         while(currentIndex < markdown.length() && foundParen) {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
-            if (markdown.substring(nextCloseBracket+1, markdown.length()).contains(")")){
-                int openParen = markdown.indexOf("(", nextCloseBracket);
-                int closeParen = markdown.indexOf(")", openParen);
-                if(!markdown.substring(closeParen+1, markdown.length()).contains(")")){
-                    foundParen = false;
-                }
-                if(markdown.substring(openParen+1, closeParen).contains(".") &&
-                !markdown.substring(openParen+1, closeParen).contains(" ") &&
-                (nextOpenBracket == 0 ||
-                !markdown.substring(nextOpenBracket - 1, nextOpenBracket).contains("!"))){
-                    toReturn.add(markdown.substring(openParen + 1, closeParen));
-                }
-                currentIndex = closeParen + 1;
-                System.out.println("in loop");
-            }
-            else{
+            int openParen = markdown.indexOf("(", nextCloseBracket);
+            int closeParen = markdown.indexOf(")", openParen);
+            if(!markdown.substring(closeParen+1, markdown.length()).contains(")")){
                 foundParen = false;
             }
+            if(markdown.substring(openParen+1, closeParen).contains(".") &&
+            !markdown.substring(openParen+1, closeParen).contains(" ") &&
+            (nextOpenBracket == 0 ||
+            !markdown.substring(nextOpenBracket - 1, nextOpenBracket).contains("!"))){
+                toReturn.add(markdown.substring(openParen + 1, closeParen));
+            }
+            currentIndex = closeParen + 1;
+            System.out.println("in loop");
+
 
         }
         return toReturn;
